@@ -34,7 +34,9 @@ end
 groups = xsC(:,1);
 groups = table2array(groups);
 groups = string(groups);
-
+TData = readtable('MeanTemps.csv');
+TempTimes = table2array(TData(:,1));
+Temps = table2array(TData(:,2:end));
 IDs = xsC(:,2);
 IDs = table2array(IDs);
 xsC = table2array(xsC(:,3:end));
@@ -74,9 +76,12 @@ load('params12Hapto.mat')
     params = readtable('FitParamsHapto.csv');
 end
 params = params(:,4:end);
-t = [0,2, 4, 6, 9,12,28];
+Starts = readtable('InfectionStartTimes.csv');
+Starts = table2array(Starts);
+Starts = mean(Starts);
+t2 = [0,2, 4, 6, 9,12,28];
  %t = [0,2, 4, 6, 8, 11, 14, 30];
-t2 = t;
+t = [Starts(its),t2(2:end)];
 tt = t(1):.1:30;
 
 x = xsC(its,:);
@@ -194,65 +199,87 @@ end
 if opt == 2
     str2= strcat('ID',num2str(IDs(its)),groups(its),'CIHapto');
 end
-
-figure 
-hold on
+   %fig = figure;
+   red = [0.9290, 0.6940, 0.1250];
+   blue = [0 0 0];
+   left_color = blue;
+   right_color = red;
+   %set(fig,'defaultAxesColorOrder',[left_color; right_color]);
 %plot(tt,lb1,'b',tt,ub1,'b','linewidth',2)
+%yyaxis left
+figure
 hold on
 x2 = [tt,fliplr(tt)];
 inBetween = [lb1,fliplr(ub1)];
 h = fill(x2, inBetween,cmap(1,:),'LineStyle','none');
 set(h,'facealpha',.4)
 plot(tt,base(:,1),'Color',cmap(1,:),'LineStyle',':','linewidth',2)
-scatter(t,x,120,cmap(1,:),'Marker','+','linewidth',2)
+scatter(t2,x,120,cmap(1,:),'Marker','+','linewidth',2)
 %plot(tt,lb2,'r',tt,ub2,'r','linewidth',2)
 inBetween = [lb2,fliplr(ub2)];
 h = fill(x2, inBetween,cmap(3,:),'LineStyle','none');
 set(h,'facealpha',.4)
 plot(tt,base(:,2),'Color',cmap(3,:),'LineStyle','-','linewidth',2)
-scatter(t,sesC(its,:),120,cmap(3,:),'Marker','*','linewidth',2)
+scatter(t2,sesC(its,:),120,cmap(3,:),'Marker','*','linewidth',2)
 %plot(tt,lb3,'g',tt,ub3,'g','linewidth',2)
 inBetween = [lb3,fliplr(ub3)];
-h = fill(x2, inBetween,cmap(2,:),'LineStyle','none');
+h = fill(x2, inBetween,cmap(2,:),'LineStyle','none','marker','none');
 set(h,'facealpha',.4)
-scatter(t,pvsC(its,:),120,cmap(2,:),'Marker','o','linewidth',2)
-plot(tt,base(:,3),'Color',cmap(2,:),'LineStyle','--','linewidth',2)
+scatter(t2,pvsC(its,:),120,cmap(2,:),'Marker','o','linewidth',2)
+plot(tt,base(:,3),'Color',cmap(2,:),'LineStyle','--','marker','none','linewidth',2)
+
+    fever = readtable('QualCompInd.csv');
+    fstart = table2array(fever(its,15))-2;
+    fend = table2array(fever(its,16))-2;
+    if fstart > 0
+    xf = [fstart,fend];
+    xf = [xf,fliplr(xf)];
+    inBetween = [[0,0],fliplr([11,11])];
+    h = fill(xf, inBetween,'y','LineStyle','none','marker','none');
+    set(h,'facealpha',.2)
+    %text(fstart,9,"fever detected")
+    end
+xline(Starts(its),'k--','linewidth',2)
 hold off
-ylim([0 11])
-xlim([0 15])
 ylabel('Concentration')
-xlabel('Days')
+ylim([0 11])
+% yyaxis right
+% plot(TempTimes,Temps(:,its),'color',[0.9290, 0.6940, 0.1250],'linewidth',2)
+ xlim([0 15])
+% ylim([-2.05, 2.75])
+% ylabel('Temprature residuals')
+xlabel('Time since contact (days)')
 title(str)
 set(gca,'FontSize',16)
 baseFileName = sprintf(str2);
 fname = '~/Documents/MATLAB/Model_identifiability/Plots';
 saveas(gca, fullfile(fname, baseFileName), 'png');
 
-figure 
-hold on
-x2 = [tt,fliplr(tt)];
-inBetween = [lb4,fliplr(ub4)];
-h = fill(x2, inBetween,'r','LineStyle','none');
-set(h,'facealpha',.4)
-plot(tt,base(:,4),'r','LineStyle',':','linewidth',2)
-
-x2 = [tt,fliplr(tt)];
-inBetween = [lb5,fliplr(ub5)];
-h = fill(x2, inBetween,'b','LineStyle','none');
-set(h,'facealpha',.4)
-plot(tt,base(:,5),'b','LineStyle','--','linewidth',2)
-hold off
-
-Q = trapz(tt,(1./tt(end)).*base(:,4));
-pfit = 3.57/Q;
-mv = [3.57, 2.33, 1.92];
-
-   
-figure 
-hold on
-x2 = [tt,fliplr(tt)];
-inBetween = [pfit.*lb4,fliplr(pfit.*ub4)];
-h = fill(x2, inBetween,'r','LineStyle','none');
-set(h,'facealpha',.4)
-plot(tt,pfit.*base(:,4),'r','LineStyle',':','linewidth',2)
+% figure 
+% hold on
+% x2 = [tt,fliplr(tt)];
+% inBetween = [lb4,fliplr(ub4)];
+% h = fill(x2, inBetween,'r','LineStyle','none');
+% set(h,'facealpha',.4)
+% plot(tt,base(:,4),'r','LineStyle',':','linewidth',2)
+% 
+% x2 = [tt,fliplr(tt)];
+% inBetween = [lb5,fliplr(ub5)];
+% h = fill(x2, inBetween,'b','LineStyle','none');
+% set(h,'facealpha',.4)
+% plot(tt,base(:,5),'b','LineStyle','--','linewidth',2)
+% hold off
+% 
+% Q = trapz(tt,(1./tt(end)).*base(:,4));
+% pfit = 3.57/Q;
+% mv = [3.57, 2.33, 1.92];
+% 
+%    
+% figure 
+% hold on
+% x2 = [tt,fliplr(tt)];
+% inBetween = [pfit.*lb4,fliplr(pfit.*ub4)];
+% h = fill(x2, inBetween,'r','LineStyle','none');
+% set(h,'facealpha',.4)
+% plot(tt,pfit.*base(:,4),'r','LineStyle',':','linewidth',2)
 end

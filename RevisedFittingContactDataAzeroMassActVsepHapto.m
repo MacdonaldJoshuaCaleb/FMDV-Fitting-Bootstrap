@@ -5,6 +5,10 @@ set(0,'DefaultFigureVisible','on')
 % import and organize data
 xs = readtable('HaptoDataContact.csv');
 
+Starts = readtable('InfectionStartTimes.csv');
+Starts = table2array(Starts);
+Starts = mean(Starts);
+
 groups = xs(:,1);
 groups = table2array(groups);
 groups = string(groups);
@@ -33,9 +37,10 @@ pfitsContactFinal = zeros(12,11);
 
 
 % days corresponding to data points 
-t = [0,2, 4, 6, 9,12,28];
+t2 = [0,2, 4, 6, 9,12,28];
 % t = [0,2, 4, 6, 8, 11, 14, 30];
-t2 = t;
+t = t2;
+
 tt = t(1):.01:30;
 ttt = t(1):.001:30;
 % parameter boundries 
@@ -67,6 +72,12 @@ function yy = paramfun1(p,t)
 end 
 
 for j = 1:12
+    Start = Starts(j);
+    tTest = [Start,t(2:end)];
+    if j == 10
+        tTest = [Start,t(4:end)];
+    end
+    tTest
     x = xs(j,:);
     s = ses(j,:);
     vv = ViralGrowth(s);
@@ -146,7 +157,7 @@ Q = trapz(tint,yyint(:,2));
    plot(t2,x,'b*',t2,s,'r+',t2,pv,'go','MarkerSize',20,'linewidth',2)
    hold off
    ylim([0 10])
-   xlim([0 30])
+   xlim([tt(1) 15])
   % if j == 1
    %legend('I(\tau)','P(\tau)','A(\tau)','log_{10}(I_{SAA})','FMDV','A_{VNT}')
    %end
