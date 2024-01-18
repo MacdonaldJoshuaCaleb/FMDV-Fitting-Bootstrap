@@ -14,7 +14,9 @@ The <ins> Finalized fitting </ins> folder contains the (i) finalized code for mo
 - <ins>HaptoDataContact.csv</ins> contains the Haptoglobin time series data (a measure of innate immune response) for each of the twelve contact-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since contact was initiated).  Units are micrograms per mL (log base 10 is taken prior to fitting).
 - <ins>VNTContactData.csv</ins> contains the Viral neutralization (VNT) time series data for each of the twelve contact-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since contact was initiated).  Units are log base 10 VNT.
 - <ins>ViremiaContact.csv</ins> contains the Viral load time series dat afor each of the twelve contact-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since contact was initiated).  Units are log base 10 genome copies per mL.
-### Program files 
+- <ins>HaptoDataNeedle.csv</ins> contains the Haptoglobin time series data (a measure of innate immune response) for each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are micrograms per mL (log base 10 is taken prior to fitting).
+- <ins>VNTNeedleData.csv</ins> contains the Viral neutralization (VNT) time series data for each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are log base 10 VNT.
+- <ins>ViremiaNeedle.csv</ins> contains the Viral load time series dat afor each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are log base 10 genome copies per mL.### Program files 
 
 ## Output analysis
 
