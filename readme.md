@@ -22,7 +22,7 @@ The <ins> Finalized fitting </ins> folder contains the (i) finalized code for mo
 - <ins>params_noise_needle.mat</ins> is the matlab matrix file containing the 10,000 paramter estimates per host used to generate figure S3 of the manuscript
 - <ins> QualCompInd.csv</ins> has median paramter estimates for both within and between-host parameters across all contact infected hosts
   
-## Program files
+### Program files
 - <ins>ContactDataHaptoStimes.m</ins> is the matlab code to generate a single instance of the Monte-Carlo simulations for a specified contact-infected host
 - <ins>NeedleDataHaptoStimes.m</ins> is the matlab code to generate a single instance of the Monte-Carlo simulations for a specified needle-infected host
 - <ins>CIsNew.m</ins> is the matlab code to generate the confidence intervals presented throughout the manuscript for the contact-infected hosts
@@ -38,5 +38,6 @@ The <ins> Finalized fitting </ins> folder contains the (i) finalized code for mo
 <ins> Output analysis</ins> contains the mean parameter estimates for each serotype over the 10,000 Monte-Carlo simulations per host as well as the python script that generates the correlation and regression analyses as well as figures 3-5 of the manuscript.
 
 ### Data files
-
+- <ins>FMDVMeansMay9.csv</ins> 10,000 sample means per serotype, columns are individual parameters, rows are individual fitting interations 
 ### Program files
+- <ins>Fitting_analysis.ipynb</ins> Python notebook for correlation and regression analyses as well as generation of figures 3-5.
