@@ -1,5 +1,9 @@
 # Repository for the paper "Within-host viral growth and immune response rates predict FMDV transmission dynamics for African Buffalo"
 
+## Abstract
+Infectious disease dynamics operate across biological scales: pathogens replicate within hosts but transmit among populations. Functional changes in the pathogen-host interaction thus generate cascading effects across organizational scales. We investigated within-host dynamics and among-host transmission of three strains (SAT1, 2, 3) of foot-and-mouth disease viruses (FMDVs) in their wildlife host, African buffalo. We combined data on viral dynamics and host immune responses with mathematical models to ask (i) How do viral and immune dynamics vary among strains?; (ii) Which viral and immune parameters determine viral fitness within hosts?; and (iii) How do within-host dynamics relate to virus transmission? Our data reveal contrasting within-host dynamics among viral strains, with SAT2 eliciting more rapid and effective immune responses than SAT1 and SAT3. Within-host viral fitness was overwhelmingly determined by variation among hosts in immune response activation rates but not by variation among individual hosts in viral growth rate. Our analyses investigating across-scale linkages indicate that viral replication rate in the host correlates with transmission rates among buffalo and that adaptive immune activation rate determines the infectious period. These parameters define the virus's relative basic reproductive number ($\mathcal{R}_0$), suggesting that viral invasion potential may be predictable from within-host dynamics.
+
+## The files
 Folders in this repository are: <br />
   1. Archive
   2. Finalized fitting
