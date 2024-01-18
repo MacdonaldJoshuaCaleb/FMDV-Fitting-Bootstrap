@@ -21,7 +21,7 @@ The <ins> Finalized fitting </ins> folder contains the (i) finalized code for mo
 - <ins>HaptoDataNeedle.csv</ins> contains the Haptoglobin time series data (a measure of innate immune response) for each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are micrograms per mL (log base 10 is taken prior to fitting).
 - <ins>VNTNeedleData.csv</ins> contains the Viral neutralization (VNT) time series data for each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are log base 10 VNT.
 - <ins>ViremiaNeedle.csv</ins> contains the Viral load time series data afor each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are log base 10 genome copies per mL.### Program files
-- <ins>InfectionStartTImes.csv</ins> contains the posterior infection start time estimates generated in our previous work [LINK]
+- <ins>InfectionStartTImes.csv</ins> contains the posterior infection start time estimates generated in our previous work (https://doi.org/10.5281/zenodo.5121203) 
 - <ins>params_noise.mat</ins> is a matlab matrix file containing the 10,000 paramter estimates per host used to generate figure 2 of the manuscript
 - <ins>params_noise_needle.mat</ins> is the matlab matrix file containing the 10,000 paramter estimates per host used to generate figure S3 of the manuscript
 - <ins> QualCompInd.csv</ins> has median paramter estimates for both within and between-host parameters across all contact infected hosts
