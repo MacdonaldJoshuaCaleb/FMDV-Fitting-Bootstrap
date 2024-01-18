@@ -20,11 +20,22 @@ The <ins> Finalized fitting </ins> folder contains the (i) finalized code for mo
 - <ins>InfectionStartTImes.csv</ins> contains the posterior infection start time estimates generated in our previous work [LINK]
 - <ins>params_noise.mat</ins> is a matlab matrix file containing the 10,000 paramter estimates per host used to generate figure 2 of the manuscript
 - <ins>params_noise_needle.mat</ins> is the matlab matrix file containing the 10,000 paramter estimates per host used to generate figure S3 of the manuscript
-
+- <ins> QualCompInd.csv</ins> has median paramter estimates for both within and between-host parameters across all contact infected hosts
+  
 ## Program files
 - <ins>ContactDataHaptoStimes.m</ins> is the matlab code to generate a single instance of the Monte-Carlo simulations for a specified contact-infected host
-- <ins>NeedleDataHaptoStimes.m</ins? is the matlab code to generate a single instance of the Monte-Carlo simulations for a specified needle-infected host
+- <ins>NeedleDataHaptoStimes.m</ins> is the matlab code to generate a single instance of the Monte-Carlo simulations for a specified needle-infected host
+- <ins>CIsNew.m</ins> is the matlab code to generate the confidence intervals presented throughout the manuscript for the contact-infected hosts
+- <ins>CIsNewNeedle.m</ins> is the matlab code to generate the confidence intervals presented in the SI for the needle-infected hosts
+- <ins>GetData.m</ins> is the file to generate a new time series given a model fit
+- <ins>GetParams.m</ins> generates the paramter estimates over 10,000 simulations for all hosts (both needle and contact infected)
+- <ins>ViralGrowth.m</ins> generates initial estimates of the initial viral load and viral growth rate as described in the manuscript
+- <ins>GetDataInitial.m</ins> generates new inital data points for immune response data given a drawn infection start time as described in the manuscript
+- <ins> tplotsNew.m</ins> generates the time plots presented in figure 2
+- <ins> tplotsNewNeedle.m</ins> generates the time plots presented in figure S3
+
 ## Output analysis
+<ins> Output analysis</ins> contains the mean parameter estimates for each serotype over the 10,000 Monte-Carlo simulations per host as well as the python script that generates the correlation and regression analyses as well as figures 3-5 of the manuscript.
 
 ### Data files
 
