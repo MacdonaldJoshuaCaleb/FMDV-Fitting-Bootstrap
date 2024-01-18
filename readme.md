@@ -20,6 +20,10 @@ The <ins> Finalized fitting </ins> folder contains the (i) finalized code for mo
 - <ins>InfectionStartTImes.csv</ins> contains the posterior infection start time estimates generated in our previous work [LINK]
 - <ins>params_noise.mat</ins> is a matlab matrix file containing the 10,000 paramter estimates per host used to generate figure 2 of the manuscript
 - <ins>params_noise_needle.mat</ins> is the matlab matrix file containing the 10,000 paramter estimates per host used to generate figure S3 of the manuscript
+
+## Program files
+- <ins>ContactDataHaptoStimes.m</ins> is the matlab code to generate a single instance of the Monte-Carlo simulations for a specified contact-infected host
+- <ins>NeedleDataHaptoStimes.m</ins? is the matlab code to generate a single instance of the Monte-Carlo simulations for a specified needle-infected host
 ## Output analysis
 
 ### Data files
