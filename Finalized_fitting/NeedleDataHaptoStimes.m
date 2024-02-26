@@ -16,13 +16,7 @@ function ret = NeedleDataHaptoStimes(its,opt)
 % Haptoglobin data 
 xs = readtable('HaptoDataNeedle.csv');
 
-% grab out info for plot title generation 
-groups = xs(:,1);
-groups = table2array(groups);
-groups = string(groups);
 
-IDs = xs(:,2);
-IDs = table2array(IDs);
 
 % log_10 transform the innate data to be on same sacle as others
 xs = table2array(xs(:,3:end));
@@ -160,21 +154,12 @@ sqwt3(end) = 0;
 sqwt3(2) = 3;
 
 
-% sqwt = 1;
-% sqwt2 = 1;
-% sqwt3 = 1;
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5555
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5555
 
-
-
-% [SM xind] = max(sNew);
-sNew(xind:end);
-% sind = find(sNew > 0);
-% lb = [0.08,0,0,0,0,vv(2),.3*max(s)];
-% lu = [.6,min(1.25*max(sNew),9),4.5,1.5,0,11,.55*max(s)];
 
 % set allowed bounds for regression 
  lb = [.075,ceil(max(sNew)),0,0,min(2,vv(2)),.7*max(sNew),min(.8*x(1),2),.8.*ff_pv(Start)];
@@ -186,24 +171,25 @@ if its == 6 && Start > 2
     xNew(1) = x(2);
 end
 
-% reset viral load guess if value is too high 
+% reset viral load guess if value is unrealistically high
 if vv(2) >= 6
     lb(5) = 2;
 end
 
 
-% "Initial guesses" for parameter values requires for Newton Rhapson
+% "Initial guesses" for regression 
 p0 = (lb+lu)./2;
 if its == 5
 p0 = [0.2405    5.8776    2.5000    0.2813    3.9943    3.0000    3.9257    0.0859];
 end
 
 
-
+% fit the original data
    [pfit resnorm] = lsqcurvefit(@paramfun1,p0,tTest,[x(1:end).*sqwt3,s(1:end).*sqwt,pv(1:end).*sqwt2],lb,lu);
 
     
-    
+    % redefine ode at more values than just data points to estimate cum and
+    % max viral laod 
       lambda = (1/21.23).*min(x).*.8;
     k=pfit(1); d=(1/21.23); r=pfit(5); K=pfit(2); theta=0; delta=pfit(3); b=pfit(4); % use disperse here ...
     x0 = [pfit(7),vv(1),pfit(8)]; % initial conditions 
@@ -217,6 +203,7 @@ end
    tint = tplot;
    [mVi I] = max(yy(:,2));
 
+   % calculate cum and max viral loads 
 Q = trapz(tint,yyint(:,2));
   cumviralContact(j) = Q;
     maxViralContact(j,:) = [mVi tt(I)];
@@ -224,33 +211,34 @@ Q = trapz(tint,yyint(:,2));
      pfitsContactFinal = [pfit,vv(1),mVi,tt(I),Q,Start];
      ret = pfitsContactFinal;
     end
-%    pvfit = fits(2*length(tt)+1:end);
-    str = strcat('ID',' ',num2str(IDs(j)),', ',extractBetween(groups(j),1,4));
-    str2= strcat('ID',num2str(IDs(j)),groups(j),'A_0','Hapto');
 
-  
+
+
+  % store solutions 
 xfitsC = fv(:,1)';
 sfitsC = fv(:,2)';
 sfitsC(sfitsC < 0) = -sfitsC(sfitsC < 0);
 pvfitsC = fv(:,3)';
+% set noise level for Monte Carlo
 nLevel = [.5,.5,.5];
-% figure
-% hold on
-% for zz = 1:200
+
+% get new dataset at noise level
 dd = GetData(xfitsC,sfitsC,pvfitsC,nLevel);
 LL = length(xfitsC);
+
+% store generated dataset 
 xNew2 = dd(1:LL);
 sNew2 = dd(LL+1:2*LL);
 pvNew2 = dd(2*LL+1:end);
 
-
+% redo regression on intial data given new dataset for innate response 
 p0  = [abs((xNew2(2)-xNew2(1))./(t2(2)-t2(1))),1];
 lb = [0, .01];
 lu = [inf,inf];
 [pfit_x resnorm] = lsqcurvefit(@mdl,pfit_x,t2(1:3),GetDataInitial(ff_x(t2(1:3)),.5),lb,lu);
 ff_x = @(t) pfit_x(1).*t + pfit_x(2);
 
-
+% redo regression on intial data given new dataset for adaptive response 
 p0  = [(pvNew2(3)-pvNew2(1))./(t2(3)-t2(1)),1];
 lb = [0, .05];
 lu = [inf,inf];
@@ -261,8 +249,9 @@ ff_pv = @(t) pfit_pv(1).*t + pfit_pv(2);
 
 lu(2) = min(9,1.25*max([sNew,sNew2]));
 
+% reestimate inital viral load and get new guess for viral replication rate
+
 vvNew = ViralGrowth(sNew2,tTest-Start,s_idx);
-%lu(end-1) = 2*max(vv(2),vvNew(2));
  lb(end-1) = 1e-4;
     lu(end-1) = 2*min(max(s),max(sNew2));
 vvOld = vv;
@@ -275,13 +264,14 @@ lu(end) = 1.2*max(pvNew(1),pvNew2(1));
 
 
 
-
+% adjust regression bounds to align with newly generated dataset 
  lb = [.075,ceil(min([max(sNew),max(sNew2)])),0,0,min([2,vvOld(2),vv(2)]),.7.*min(max(sNew),max(sNew2)),min([.8.*pfit(7),2,.8*xNew2(1)]),min(.8.*ff_pv(Start),.8.*pfit(8))];
  lu = [1,11,2.25,1.5,15,1.3*max(max(sNew),max(sNew2)),max(1.2*x(1),1.2*xNew2(1)),max(1.2.*ff_pv(Start),1.2.*pfit(8))];
 
  
- 
+ % fit new dataset 
 [pfit2 resnorm] = lsqcurvefit(@paramfun1,pfit,tTest,[xNew2(1:end).*sqwt3,sNew2(1:end).*sqwt,pvNew2(1:end).*sqwt2],lb,lu);
+% get out max and cum viral for new dataset 
  lambda = (1/21.23).*min(x).*.8;
     k=pfit2(1); d=(1/21.23); r=pfit2(5); K=pfit2(2); theta=0; delta=pfit2(3); b=pfit2(4); % use disperse here ...
     x0 = [pfit2(7),vv(1),pfit2(8)]; % initial conditions 
@@ -298,11 +288,15 @@ lu(end) = 1.2*max(pvNew(1),pvNew2(1));
 Q = trapz(tint,yyint(:,2));
 pfitsContactFinal2 = [pfit2,vv(1),mVi,tt(I),Q,Start];
 
+% return options 
 if opt == 1
+% return relative error and basline + Monter carlo simuation estimated
+% params 
 RE = abs(pfitsContactFinal2-pfitsContactFinal)./pfitsContactFinal;
 ret = [pfitsContactFinal;pfitsContactFinal2;RE];
 end
 if opt == 2
+    % return the generated dataset and infection start time 
     ret = [xNew2;sNew2;pvNew2;tTest];
 end
 end
