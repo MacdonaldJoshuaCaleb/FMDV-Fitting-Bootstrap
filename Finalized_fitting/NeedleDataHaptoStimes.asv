@@ -111,7 +111,7 @@ lu = [inf,inf];
 ff_pv = @(t) pfit_pv(1).*t + pfit_pv(2);
 
 
-% fill in new data point into data array 
+
     xNew = [ff_x(Start),xs(j,ind(1):end)];
     sNew = [0,ses(j,ind(1):end)];
     pvNew = [ff_pv(Start),pvs(j,ind(1):end)];
@@ -126,9 +126,8 @@ ff_pv = @(t) pfit_pv(1).*t + pfit_pv(2);
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% weights for each datapoint - treated as hyper paramters
 len_s = length(find(s>0));
 len_x = length(find(x>0));
 len_pv = length(find(pv>0));
@@ -169,36 +168,47 @@ sqwt3(2) = 3;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5555
 
 
-
-% [SM xind] = max(sNew);
+% [MM II] = max(xNew);
+% sqwt3(II) = 3;
+% sqwt3(end-3:end)= 3;
+[SM xind] = max(sNew);
 sNew(xind:end);
-% sind = find(sNew > 0);
+sind = find(sNew > 0);
 % lb = [0.08,0,0,0,0,vv(2),.3*max(s)];
 % lu = [.6,min(1.25*max(sNew),9),4.5,1.5,0,11,.55*max(s)];
 
-% set allowed bounds for regression 
+
  lb = [.075,ceil(max(sNew)),0,0,min(2,vv(2)),.7*max(sNew),min(.8*x(1),2),.8.*ff_pv(Start)];
  lu = [1,11,2.25,1.5,15,1.3*max(sNew),max(2,1.2*x(1)),1.2.*ff_pv(Start)];
 
-
+% if its >= 8
+%     lb(end) = .9*vv(1);
+%     lu(end) = 1.1.*vv(1);
+% end
 if its == 6 && Start > 2
-    % remove first datapoint if start time is too late for this host 
     xNew(1) = x(2);
+    %lb(end) = .9*vv(1);
+    %lu(end) = 1.1.*vv(1);
 end
 
-% reset viral load guess if value is too high 
 if vv(2) >= 6
     lb(5) = 2;
 end
 
 
-% "Initial guesses" for parameter values requires for Newton Rhapson
+% p0(end) = 1/20;
+% params = readtable('params_may3.csv');
+% params = table2array(params);
+% p0 = params(its,1:8);
 p0 = (lb+lu)./2;
 if its == 5
 p0 = [0.2405    5.8776    2.5000    0.2813    3.9943    3.0000    3.9257    0.0859];
 end
 
-
+% p0(end-1) = 5;
+% if p0(6) > 5
+%     p0(6) = 2;
+% end
 
    [pfit resnorm] = lsqcurvefit(@paramfun1,p0,tTest,[x(1:end).*sqwt3,s(1:end).*sqwt,pv(1:end).*sqwt2],lb,lu);
 
