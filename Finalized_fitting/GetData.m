@@ -1,8 +1,14 @@
 function [d] = GetData(fit1,fit2,fit3,nLevel)
+% generate new datasets given model solutions (fit1,fit2,fit3) 
+% at a specified noise level
+
+    % storage bins for generated datasets 
     d1 = zeros(1,length(fit1));
     d2 = zeros(1,length(fit1));
     d3 = zeros(1,length(fit1));
         for j = 1:length(fit1)
+            % generate according to heterodesic noise for each compartment
+            % resample if value is less than zero
             d1(j) = fit1(j) + normrnd(0,fit1(j)*nLevel(1).^2);
             while d1(j) < 0
                 d1(j) = fit1(j) + normrnd(0,fit1(j)*nLevel(1).^2);
@@ -19,5 +25,6 @@ function [d] = GetData(fit1,fit2,fit3,nLevel)
             end
       
         end
+        % return concatenated array of new dataset 
         d = [d1, d2, d3];
 end
