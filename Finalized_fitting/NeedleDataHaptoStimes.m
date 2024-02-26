@@ -13,53 +13,59 @@ function ret = NeedleDataHaptoStimes(its,opt)
 % import and organize data
 % import and organize data
 
+% Haptoglobin data 
 xs = readtable('HaptoDataNeedle.csv');
 
+% grab out info for plot title generation 
 groups = xs(:,1);
 groups = table2array(groups);
 groups = string(groups);
 
 IDs = xs(:,2);
 IDs = table2array(IDs);
-%IDs = string(groups);
 
+% log_10 transform the innate data to be on same sacle as others
 xs = table2array(xs(:,3:end));
 xs(xs>0) = log10(xs(xs>0));
 
+% read in virus data
 ses = readtable('ViremiaNeedle.csv');
 ses = table2array(ses(:,3:end));
 
+% read in VNT data
 pvs = readtable('VNTNeedleData.csv');
 pvs = table2array(pvs(:,3:end));
 
 % time in experiment days (since needle infected)
 t = [0,2, 4, 6, 8, 11, 14, 30];
-% t = t2;
+% store a copy for later calculations 
 t2 = t;
 
 % objective function 
 options=odeset('RelTol',1e-12,'AbsTol',1e-12);
 function yy = paramfun1(p,t)
     
-    % 5 gone, 8 gone
-       lambda = (1/21.23).*min(x).*.8;
-    %lambda = lambda2;
-    k=p(1); d=(1/21.23); r=p(5); K=p(2); theta=0; delta=p(3); b=p(4); v0 = p(6); % use disperse here ...
+ 
+       lambda = (1/21.23).*min(x).*.8; % fix lambda for each host so that equib. is 80% minimum data value
+       % define paramters to be inferred 
+    k=p(1); d=(1/21.23); r=p(5); K=p(2); theta=0; delta=p(3); b=p(4); v0 = p(6); 
+    % vv refers to initial estiamte of initial viral load form viralgrowth .m later in the code 
     x0 = [p(7),vv(1),p(8)]; % initial conditions 
     atilde=0;
-
+    % the ode
      f = @(t,a) [lambda+k*(a(2)/(v0+a(2)))*a(1)- d*a(1); ... 
                (r*(1-(a(2)/K))-theta*a(1)-delta*a(3))*a(2); ...
                 (atilde*(a(1)/(1+a(1)))+b*a(3))*a(2)];
    
    [~,yy] = ode45(f,t,x0,options);
+   % return concentatnated array of weighted model solutions 
    yy = [yy(1:end,1)'.*sqwt3,yy(1:end,2)'.*sqwt,yy(:,3)'.*sqwt2];
 end 
 
 
 
 
-
+% regression for initial innate/adaptive values as defined 
 function ret = mdl(p,t)
     int = p(2); slope = p(1);
     ret = slope.*t + int;
@@ -68,8 +74,8 @@ end
 function ret = mdl2(p,t)
     ret = p(1).*exp(p(2).*t);
 end
-%its = 1:12;
-for jj = its:its
+
+for jj = its:its 
     j = its;
     x = xs(j,:);
     s = ses(j,:);
