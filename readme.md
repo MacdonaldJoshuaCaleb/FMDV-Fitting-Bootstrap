@@ -11,14 +11,17 @@ Joshua C. Macdonald, Hayriye Gulbudak, Brianna Beechler, Erin E. Gorsich, Simon 
   
 ## Contact for questions about program files
 - JCM: joshuamac-AT-tauex.tau.ac.il (temporary, postdoc email), or macdonald.j.caleb-AT-gmail.com (stable)
-  
+
+## Software version, package, and license information 
+All code in this repository is avalible under a Creative Commons International 4.0 license with attribution.  Authors wishing to modify this code for their own purposes should cite the version of this work archived in Zenodo (). The matlab scripts in this repository use only base Matlab install modules and were written using release R2020b.  We hvae tested the code with release R2023b, and found no compatibility issues.  The Juypter Notebook is written with Python version   
+
 ## The files
 Folders in this repository are: <br />
   1. Finalized fitting
   2. Output analysis 
 
 ## Finalized fitting
-The <ins> Finalized fitting </ins> folder contains the (i) finalized code for model fitting as described in the methods section and SI of the paper, (ii) the input experimental data formatted to work with this code, (iii) the code to generate parameter confidence intervals for both the needle and contact-infected hosts, (iv) the code to generate the time plots shown in figures 2 and S3 of the manuscript, (v) output parameters in 3D (host x paramter x simulation number) .mat format. needed to run the CI generation and plot generation files (vi) For useers that may not have access to matlab there are 2D csv versions of these files included.  Specific files in this folder (with brief description) are:
+The <ins> Finalized fitting </ins> folder contains the (i) finalized code for model fitting as described in the methods section and SI of the paper, (ii) the input experimental data formatted to work with this code, (iii) the code to generate parameter confidence intervals for both the needle and contact-infected hosts, (iv) the code to generate the time plots shown in figures 2 and S3 of the manuscript, (v) output parameters in 3D (host x paramter x simulation number) .mat format. needed to run the CI generation and plot generation files (vi) For useers that may not have access to matlab there are 2D csv versions of these files included.  We note this code is written in an <ins> object oriented </ins> style, and so most code will require <ins> no </ins> modifications from the end user.  The only file which an end user <ins> may </ins> wish to modify is <ins> Get_Params.m </ins> which is a <ins> demonstration script </ins> showing how one can use the backend program files to generate a specified number of Monte Carlo simulations / parameter estimates for each individual host.  Specific files in this folder (with brief description) are:
 
 ### Data files
 #### Input data
@@ -49,7 +52,7 @@ The <ins> Finalized fitting </ins> folder contains the (i) finalized code for mo
 - <ins> tplotsNew.m</ins> generates the time plots presented in figure 2
 - <ins> tplotsNewNeedle.m</ins> generates the time plots presented in figure S3
 
-#### Script go generate 10,000 parameter estimates per host 
+#### Demonstration script go generate 10,000 parameter estimates per host 
 - <ins>GetParams.m</ins> generates the paramter estimates over 10,000 simulations for all hosts (both needle and contact infected) by calling support function files 
 
 ## Output analysis
