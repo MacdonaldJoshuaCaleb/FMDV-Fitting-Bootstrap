@@ -19,7 +19,13 @@ xs = readtable('HaptoDataContact.csv');
 Starts = readtable('InfectionStartTimes.csv');
 Starts = table2array(Starts);
 
+groups = xs(:,1);
+groups = table2array(groups);
+groups = string(groups);
 
+IDs = xs(:,2);
+IDs = table2array(IDs);
+%IDs = string(groups);
 
 % take log of Innate response to get everything on the same scale
 xs = table2array(xs(:,3:end));
@@ -34,9 +40,12 @@ pvs = readtable('VNTContactData.csv');
 pvs = table2array(pvs(:,3:end));
 
 
+% params = readtable('FitParamsHapto.csv');
+% params = table2array(params(:,4:10));
+
 % days corresponding to data points (days since contact)
 t2 = [0,2, 4, 6, 9,12,28];
-
+% t = [0,2, 4, 6, 8, 11, 14, 30];
 t = t2;
 
 
@@ -44,7 +53,7 @@ t = t2;
 options=odeset('RelTol',1e-12,'AbsTol',1e-12);
 function yy = paramfun1(p,t)
     
-
+    % 5 gone, 8 gone
     lambda = (1/21.23).*min(x).*.8;
     k=p(1); d=(1/21.23); r=p(5); K=p(2); theta=0; delta=p(3); b=p(4); v0 = p(6); % use disperse here ...
     x0 = [p(7),vv(1),p(8)]; % initial conditions 
@@ -61,15 +70,17 @@ end
 
 
 
-% function for linear regression on initial immune data
+% functions for linear regression on initial immune data
 function ret = mdl(p,t)
     int = p(2); slope = p(1);
     ret = slope.*t + int;
 end
 
+function ret = mdl2(p,t)
+    ret = p(1).*exp(p(2).*t);
+end
 
 
-% draw an infection start time 
 for jj = its:its
     j = its;
     x = xs(j,:);
@@ -84,7 +95,6 @@ for jj = its:its
         end
     end
     while Start >= ind2-1
-        % redraw start time if too close to first positive measure 
         SIDX = randi([1 20000],1,1);
         Start = Starts(SIDX,j);
     end
@@ -97,7 +107,8 @@ for jj = its:its
     time =   [t(ind(1)-1)  t(ind(1))];
     xtemp =   [min(x(ind(1)-1:ind(1)+1)) max(x(ind(1)-1:ind(1)))];
     pvtemp =   [min(pv(ind(1)-1:ind(1)+1)) max(pv(ind(1)-1:ind(1)))];
-
+%     stemp = [s(ind(1)-1) s(ind(1))];
+%     pvtemp = [pv(ind(1)-1) pv(ind(1))];
 
 % fit regression models for initial conditions 
 p0  = [abs((x(2)-x(1))./(t2(2)-t2(1))),1];
@@ -138,7 +149,9 @@ ff_pv = @(t) pfit_pv(1).*t + pfit_pv(2);
 % set non-linear least squares weights for each host, treated as hyper
 % parameters 
 
-
+len_s = length(find(s>0));
+len_x = length(find(x>0));
+len_pv = length(find(pv>0));
 sqwt = .1.*ones(1,length(pvNew));
 s_ind = find(sNew > 0);
 [MS IS] = max(sNew);
@@ -239,7 +252,7 @@ end
     
     
       lambda = (1/21.23).*min(x).*.8;
-    k=pfit(1); d=(1/21.23); r=pfit(5); K=pfit(2); theta=0; delta=pfit(3); b=pfit(4); 
+    k=pfit(1); d=(1/21.23); r=pfit(5); K=pfit(2); theta=0; delta=pfit(3); b=pfit(4); % use disperse here ...
     x0 = [pfit(7),vv(1),pfit(8)]; % initial conditions 
     atilde=0; v0 = pfit(6);
   f = @(t,a) [lambda+k*(a(2)/(v0+a(2)))*a(1)- d*a(1); ... 
@@ -277,7 +290,6 @@ xNew2 = dd(1:LL);
 sNew2 = dd(LL+1:2*LL);
 pvNew2 = dd(2*LL+1:end);
 
-% re estimate inital values for A, I
 
 p0  = [abs((xNew2(2)-xNew2(1))./(t2(2)-t2(1))),1];
 lb = [0, .01];
@@ -315,7 +327,6 @@ lu(end) = 1.2*max(pvNew(1),pvNew2(1));
   f = @(t,a) [lambda+k*(a(2)/(v0+a(2)))*a(1)- d*a(1); ... 
                (r*(1-(a(2)/K))-theta*a(1)-delta*a(3))*a(2); ...
                 (atilde*(a(1)/(1+a(1)))+b*a(3))*a(2)];
-  % recalculate cum and max viral 
    [tplot,yy] = ode45(f,tt,x0);its
    [tStore,fv] = ode45(f,tTest,x0);
    yyint = yy;

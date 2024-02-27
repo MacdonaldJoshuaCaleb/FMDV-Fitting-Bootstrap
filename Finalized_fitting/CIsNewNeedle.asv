@@ -1,4 +1,3 @@
-% Generate tables S2, S3
 % read in the needle parameter estiamtes
 load('params_noise_needle.mat')
  params = params_noise_needle;
@@ -172,7 +171,7 @@ center_13 = mean(DMed13);
 center_12 = mean(DMed12);
 center_23 = mean(DMed23);
 
-% pvalues as secondary measure 
+% 
 for i = 1:13
     count = 0;
 for j = 1:10000
@@ -223,8 +222,28 @@ end
 p_23(i) = 1-count/10000;
 end
         
+% 
+% for j = 1:11
+%     temp = sort(params(:,:,j));
+%     fprintf('CIs\n')
+%     lbs(j) = temp(remove+1,:);
+%     ubs(j) = temp(end-remove,:);
+%     fprintf('Mean\n')
+%     mean(temp)
+%     fprintf('Median\n')
+%     median(temp)
+% end
 
-% print tables for difference 
+% for j = 1:11
+%     temp2(j,:) = median(params(:,:,j));
+%     fprintf('CIs\n')
+%     array2table([temp(remove+1,:);temp(end-remove,:)])
+%     fprintf('Mean\n')
+%     mean(temp)
+%     fprintf('Median\n')
+%     median(temp)
+% end
+digits = 32;
 mns(1,:) = mean(DM12(:,1:13));
 mns(2,:) = mean(DM13(:,1:13));
 mns(3,:) = mean(DM23(:,1:13));
@@ -250,11 +269,10 @@ for i = 1:size(s_table_diff,1)
         s_table(i,j) = strcat(num2str(mns(j,i),'%.3g'),{', ('},num2str(lbs(i,j),'%.3g'),{', '},num2str(ubs(i,j),'%.3g'),')');
     end
 end
-% print table for actual values 
+
 
 s_table
 
-% print table for differnce between route of infection within serotype
 DCN1 = SAT1Means-SAT1Means_needle;
 DCN2 = SAT2Means-SAT2Means_needle;
 DCN3 = SAT3Means-SAT3Means_needle;
