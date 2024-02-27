@@ -31,7 +31,7 @@ The <ins> Finalized fitting </ins> folder contains the (i) finalized code for mo
 - <ins>params_noise.mat</ins> is the 3D matlab matrix file containing the 10,000 paramter estimates per host used to generate figure 2 of the manuscript
 - <ins>params_noise.csv</ins> is the 2D csv version of the matlab matrix file of the same nae to allow access to indivdual host parameter estimates for those without matlab
 - <ins>params_noise_needle.mat</ins> is the 3D matlab matrix file containing the 10,000 paramter estimates per host used to generate figure S3 of the manuscript
-- <ins>params_noise.csv</ins> is the 2D csv version of the matlab matrix file of the same nae to allow access to indivdual host parameter estimates for those without matlab
+- <ins>params_noise_needle.csv</ins> is the 2D csv version of the matlab matrix file of the same nae to allow access to indivdual host parameter estimates for those without matlab
 - <ins> QualCompInd.csv</ins> has median paramter estimates for both within and between-host parameters across all contact infected hosts
   
 ### Program files
