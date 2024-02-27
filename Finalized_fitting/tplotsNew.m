@@ -237,7 +237,8 @@ fname = '~/Documents/MATLAB/Model_identifiability/Plots';
 saveas(gca, fullfile(fname, baseFileName), 'png');
 
 
-elseif opt == 2 % alternative plotting option 
+elseif opt == 2 % alternative plotting option, 
+    % useful for checking coverage of the empirical data 
 
 % colormaps for differnt serotypes 
 cmap1 = [.5 .5 .5 .2;
