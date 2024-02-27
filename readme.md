@@ -7,10 +7,10 @@ Infectious disease dynamics operate across biological scales: pathogens replicat
 Joshua C. Macdonald, Hayriye Gulbudak, Brianna Beechler, Erin E. Gorsich, Simon Gubbins, Eva Perez-Martin, and Anna E. Jolles
 
 ## Corresponding authors contact
-- AJ: aejolles@ gmail.com, HG: h.gulbudak@louisiana.edu
+- AJ: aejolles-AT-gmail.com, HG: h.gulbudak-AT-louisiana.edu
   
 ## Contact for questions about program files
-- JCM: joshuamac@tauex.tau.ac.il (temporary, postdoc email), or macdonald.j.caleb@gmail.com (stable)
+- JCM: joshuamac-AT-tauex.tau.ac.il (temporary, postdoc email), or macdonald.j.caleb-AT-gmail.com (stable)
   
 ## The files
 Folders in this repository are: <br />
