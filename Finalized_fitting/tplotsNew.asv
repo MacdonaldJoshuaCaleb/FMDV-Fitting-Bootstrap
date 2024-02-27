@@ -1,11 +1,6 @@
 function [] = tplotsNew(its,opt)
 % function for plotting results for contact infected hosts 
-% inputs 
-% its  - specifys host 1-12, see data table
-% opt - specifys plotting option 
-% option 1- plots with CIs as they appear in the manuscript 
-% option 2 - plots with SRS of 500 time trajectories 
-
+% inputs - its specifys host
 options=odeset('RelTol',1e-12,'AbsTol',1e-12);
 % specify serotype specific colormpas 
 cmap1 = [.5 .5 .5;

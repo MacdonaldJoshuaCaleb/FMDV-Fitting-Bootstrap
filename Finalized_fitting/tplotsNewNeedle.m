@@ -241,31 +241,5 @@ baseFileName = sprintf(str2);
 fname = '~/Documents/MATLAB/Model_identifiability/Plots';
 saveas(gca, fullfile(fname, baseFileName), 'png');
 
-% figure 
-% hold on
-% x2 = [tt,fliplr(tt)];
-% inBetween = [lb4,fliplr(ub4)];
-% h = fill(x2, inBetween,'r','LineStyle','none');
-% set(h,'facealpha',.4)
-% plot(tt,base(:,4),'r','LineStyle',':','linewidth',2)
-% 
-% x2 = [tt,fliplr(tt)];
-% inBetween = [lb5,fliplr(ub5)];
-% h = fill(x2, inBetween,'b','LineStyle','none');
-% set(h,'facealpha',.4)
-% plot(tt,base(:,5),'b','LineStyle','--','linewidth',2)
-% hold off
-% 
-% Q = trapz(tt,(1./tt(end)).*base(:,4));
-% pfit = 3.57/Q;
-% mv = [3.57, 2.33, 1.92];
-% 
-%    
-% figure 
-% hold on
-% x2 = [tt,fliplr(tt)];
-% inBetween = [pfit.*lb4,fliplr(pfit.*ub4)];
-% h = fill(x2, inBetween,'r','LineStyle','none');
-% set(h,'facealpha',.4)
-% plot(tt,pfit.*base(:,4),'r','LineStyle',':','linewidth',2)
+
 end
