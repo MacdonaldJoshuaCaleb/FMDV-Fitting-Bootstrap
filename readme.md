@@ -29,9 +29,9 @@ The <ins> Finalized fitting </ins> folder contains the (i) finalized code for mo
 - <ins>ViremiaNeedle.csv</ins> contains the Viral load time series data afor each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are log base 10 genome copies per mL.### Program files
 - <ins>InfectionStartTImes.csv</ins> contains the posterior infection start time estimates generated in our previous work (https://doi.org/10.5281/zenodo.5121203) 
 - <ins>params_noise.mat</ins> is the 3D matlab matrix file containing the 10,000 paramter estimates per host used to generate figure 2 of the manuscript
-- <ins>params_noise.csv</ins> is the 2D csv version of the matlab matrix file of the same nae to allow access to indivdual host parameter estimates for those without matlab
+- <ins>params_noise.csv</ins> is the 2D csv version of the matlab matrix file of the same name to allow access to indivdual host parameter estimates for those without matlab
 - <ins>params_noise_needle.mat</ins> is the 3D matlab matrix file containing the 10,000 paramter estimates per host used to generate figure S3 of the manuscript
-- <ins>params_noise_needle.csv</ins> is the 2D csv version of the matlab matrix file of the same nae to allow access to indivdual host parameter estimates for those without matlab
+- <ins>params_noise_needle.csv</ins> is the 2D csv version of the matlab matrix file of the same name to allow access to indivdual host parameter estimates for those without matlab
 - <ins> QualCompInd.csv</ins> has median paramter estimates for both within and between-host parameters across all contact infected hosts
   
 ### Program files
