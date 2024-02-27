@@ -13,7 +13,7 @@ Joshua C. Macdonald, Hayriye Gulbudak, Brianna Beechler, Erin E. Gorsich, Simon 
 - JCM: joshuamac-AT-tauex.tau.ac.il (temporary, postdoc email), or macdonald.j.caleb-AT-gmail.com (stable)
 
 ## Software version, package, and license information 
-All code in this repository is avalible under a Creative Commons International 4.0 license with attribution.  Authors wishing to modify this code for their own purposes should cite the version of this work archived in Zenodo (). The matlab scripts in this repository use only base Matlab install modules and were written using release R2020b.  We hvae tested the code with release R2023b, and found no compatibility issues.  The Juypter Notebook is written with Python version   
+All code in this repository is avalible under a Creative Commons International 4.0 license with attribution.  Authors wishing to modify this code for their own purposes should cite the version of this work archived in Zenodo (). The matlab scripts in this repository use only base Matlab install modules and were written using release R2020b.  We hvae tested the code with release R2023b, and found no compatibility issues.  The Juypter Notebook was originally written with Python 3.6.11.  We have tested it with the version 3.10.12 as packaged by conda-forge and found no compatibility issues.    
 
 ## The files
 Folders in this repository are: <br />
