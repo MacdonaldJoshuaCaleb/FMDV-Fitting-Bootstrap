@@ -21,18 +21,22 @@ Folders in this repository are: <br />
 The <ins> Finalized fitting </ins> folder contains the (i) finalized code for model fitting as described in the methods section and SI of the paper, (ii) the input experimental data formatted to work with this code, (iii) the code to generate parameter confidence intervals for both the needle and contact-infected hosts, (iv) the code to generate the time plots shown in figures 2 and S3 of the manuscript, (v) output parameters in 3D (host x paramter x simulation number) .mat format. needed to run the CI generation and plot generation files (vi) For useers that may not have access to matlab there are 2D csv versions of these files included.  Specific files in this folder (with brief description) are:
 
 ### Data files
+#### Input data
 - <ins>HaptoDataContact.csv</ins> contains the Haptoglobin time series data (a measure of innate immune response) for each of the twelve contact-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since contact was initiated).  Units are micrograms per mL (log base 10 is taken prior to fitting).
 - <ins>VNTContactData.csv</ins> contains the Viral neutralization (VNT) time series data for each of the twelve contact-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since contact was initiated).  Units are log base 10 VNT.
 - <ins>ViremiaContact.csv</ins> contains the Viral load time series data afor each of the twelve contact-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since contact was initiated).  Units are log base 10 genome copies per mL.
 - <ins>HaptoDataNeedle.csv</ins> contains the Haptoglobin time series data (a measure of innate immune response) for each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are micrograms per mL (log base 10 is taken prior to fitting).
 - <ins>VNTNeedleData.csv</ins> contains the Viral neutralization (VNT) time series data for each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are log base 10 VNT.
-- <ins>ViremiaNeedle.csv</ins> contains the Viral load time series data afor each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are log base 10 genome copies per mL.### Program files
+- <ins>ViremiaNeedle.csv</ins> contains the Viral load time series data afor each of the twelve needle-infected hosts.  Rows correspond to each host, and columns to observation day (in terms of time since experiment start).  Units are log base 10 genome copies per mL.
+#### Output data 
 - <ins>InfectionStartTImes.csv</ins> contains the posterior infection start time estimates generated in our previous work (https://doi.org/10.5281/zenodo.5121203) 
 - <ins>params_noise.mat</ins> is the 3D matlab matrix file containing the 10,000 paramter estimates per host used to generate figure 2 of the manuscript
 - <ins>params_noise.csv</ins> is the 2D csv version of the matlab matrix file of the same name to allow access to indivdual host parameter estimates for those without matlab
 - <ins>params_noise_needle.mat</ins> is the 3D matlab matrix file containing the 10,000 paramter estimates per host used to generate figure S3 of the manuscript
 - <ins>params_noise_needle.csv</ins> is the 2D csv version of the matlab matrix file of the same name to allow access to indivdual host parameter estimates for those without matlab
-- <ins> QualCompInd.csv</ins> has median paramter estimates for both within and between-host parameters across all contact infected hosts
+
+#### For comparision across scales
+- <ins> QualCompInd.csv</ins> has median paramter estimates for both within and between-host (see https://doi.org/10.5281/zenodo.5121203)  parameters across all contact infected hosts.  Fever quantities are from https://doi.org/10.1186/s13567-022-01076-3
   
 ### Program files
 #### Support files that don't require end user modification 
