@@ -48,11 +48,14 @@ The <ins> Finalized fitting </ins> folder contains the (i) finalized code for mo
 - <ins>GetData.m</ins> is the file to generate a new time series given a model fit
 - <ins>ViralGrowth.m</ins> generates initial estimates of the initial viral load and viral growth rate as described in the manuscript
 - <ins>GetDataInitial.m</ins> generates new inital data points for immune response data given a drawn infection start time as described in the manuscript
-#### Scripts with function calls to replicate figures and confidence interval generation 
+
+#### Scripts with function calls to replicate figures, and tables given the generated parameter sets in the data files
 - <ins> tplotsNew.m</ins> generates the time plots presented in figure 2
 - <ins> tplotsNewNeedle.m</ins> generates the time plots presented in figure S3
+- <ins> CIsNew.m </ins> generates the CIs and means displayed in the SI for contact infected hosts
+- <ins> CIsNewNeedle.m </ins> generates the CIs and means displayed in the SI for needle infected hosts
 
-#### Demonstration script go generate 10,000 parameter estimates per host 
+#### Demonstration script go generate a new set of parameter estimates per host 
 - <ins>GetParams.m</ins> generates the paramter estimates over 10,000 simulations for all hosts (both needle and contact infected) by calling support function files 
 
 ## Output analysis
